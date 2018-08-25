@@ -19,8 +19,8 @@ from todo import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index),
-    path('ekle', views.ekle),
+    path('', views.index2),
+    path('ekle2', views.ekle2),
     path('sil/<int:id>', views.sil),
     path('guncelle/<int:id>', views.guncelle),
     path('guncelle/tamamla/<int:id>', views.tamamla),

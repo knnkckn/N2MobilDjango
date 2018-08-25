@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <div style="margin-top: 150px" class="container">
+         <h3>N2MOBİL</h3>
+          <table class="table">
+      <thead>
+        <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Yazarlar</th>
+      <th scope="col">Kitaplar</th>
+      <th scope="col">Yayınevi</th>
+       </tr>
+      </thead>
+      <tbody>
+        {% for i in tablo %}
+             <tr>
+                <th scope="row">{{ i.id }}</th>
+                 <td>{{ i.kitapAdi }}</td>
+                 <td>{{ i.yaazarAdi }}</td>
+                 <td>{{ i.yayineviAdi }}</td>
+                 <td><a href="/guncelle/{{ i.id }}" class="btn btn-info">Güncelle</a></td>
+                 <td><a href="/sil/{{ i.id }}" id="sil_btn" class="btn btn-info " name="{{ i.id }}">Sil</a></td>
+             </tr>
+
+
+        {% endfor %}
+
+
+  </tbody>
+</table>
+</div>
+</body>
+</html>

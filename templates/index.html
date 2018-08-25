@@ -26,16 +26,19 @@
      <div style="margin-top: 150px" class="container">
          <h3>N2Mobil</h3>
          <hr>
-         <form action="arama" method="post">
+         <form  action="arama" method="post">
              {% csrf_token  %}
-            <div class="form-group">
 
+
+            <div class="form-group">
             <input type="text" name="arama" class="form-control" id="formGroupExampleInput" placeholder="Aranacak veriyi girin">
             </div>
              <button type="submit" class="btn btn-info">Arama</button>
           </form>
+
+
          <hr>
-         <form action="ekle" method="post">
+         <form id="form_ekle">
              {% csrf_token  %}
             <div class="form-group">
             <label for="formGroupExampleInput">Kitap</label>
@@ -49,7 +52,7 @@
             <label for="formGroupExampleInput3">Yayınevi</label>
             <input type="text" name="yayineviAdi" class="form-control" id="formGroupExampleInput3" placeholder="Yayinevi">
             </div>
-             <button type="submit" class="btn btn-info">Ekle</button>
+             <button type="submit" class="btn btn-info" id="btn_ekle">Ekle</button>
           </form>
          <hr>
          <table class="table">
@@ -69,7 +72,7 @@
                  <td>{{ i.yaazarAdi }}</td>
                  <td>{{ i.yayineviAdi }}</td>
                  <td><a href="/guncelle/{{ i.id }}" class="btn btn-info">Güncelle</a></td>
-                 <td><a href="/sil/{{ i.id }}" class="btn btn-info">Sil</a></td>
+                 <td><a href="/sil/{{ i.id }}" id="sil_btn" class="btn btn-info " name="{{ i.id }}">Sil</a></td>
              </tr>
 
 
@@ -85,5 +88,31 @@
      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+
+<script type="text/javascript" >
+    $(document).ready(function() {
+        $("#form_ekle").submit(function (event) {
+            event.preventDefault()
+            $.ajax({
+                type: 'POST',
+                url: 'ekle',
+
+                data: {
+                    kitapAdi: $('#formGroupExampleInput').val(),
+                    yazarAdi: $('#formGroupExampleInput2').val(),
+                    yayinevi: $('#formGroupExampleInput3').val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                },
+                success: function () {
+                    alert('Kaydedildi')
+                }
+            })
+
+        })
+    })
+</script>
+
+
 </body>
 </html>
+

@@ -1,7 +1,9 @@
 from django.shortcuts import render , redirect
 from .models import Kitaps
+from .models import Yayinevi
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
+import json
 
 
 def index(request):
@@ -9,6 +11,11 @@ def index(request):
     tablo = Kitaps.objects.all()
 
     return render(request,"index.html" , {"tablo": tablo})
+def index2(request):
+
+    tablo = Yayinevi.objects.all()
+
+    return render(request,"base.html", {"tablo" : tablo})
 
 
 # index.html üzerinden models de oluşturduğumuz kitaps(database) sınıfına veri ekleme foksiyonu
@@ -20,20 +27,36 @@ def ekle(request):
     else:
         kitapadi  = request.POST.get("kitapAdi")
         yazaradi = request.POST.get("yazarAdi")
-        yayinevi = request.POST.get("yayineviAdi")
+        yayinevi = request.POST.get("yayinevi")
 
         newKitaps = Kitaps(kitapAdi=kitapadi , yaazarAdi=yazaradi , yayineviAdi=yayinevi)
 
         newKitaps.save()
-        messages.success(request,"Veriler başarıyla eklendi")
+
         return redirect("/")
+
+def ekle2(request):
+    if request.method == "GET":
+        return redirect("/")
+
+
+    else:
+        kitapadi  = request.POST.get("kitapAdi")
+        yazaradi = request.POST.get("yazarAdi")
+        yayinevi = request.POST.get("yayinevi")
+
+        newKitaps = Kitaps(kitapAdi=kitapadi , yaazarAdi=yazaradi , yayineviAdi_id=yayinevi)
+
+        newKitaps.save()
+
+        tablo =Kitaps.objects.all()
+
+        return render(request, "tablo.html", {"tablo": tablo})
 
 def sil(request , id ):
     sil = Kitaps.objects.filter(id = id)
 
-
     sil.delete()
-    messages.success(request, "Silme işlemi tamamlandı")
     return redirect('/')
 
 # guncelle ve tamamla fonksiyonları beraber güncelleme işlemini yapmakta
