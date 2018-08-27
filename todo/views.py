@@ -1,4 +1,4 @@
-from django.shortcuts import render , redirect
+from django.shortcuts import render , redirect , HttpResponse
 from .models import Kitaps
 from .models import Yayinevi
 from django.contrib import messages
@@ -53,11 +53,14 @@ def ekle2(request):
 
         return render(request, "tablo.html", {"tablo": tablo})
 
-def sil(request , id ):
-    sil = Kitaps.objects.filter(id = id)
+def sil(request , id):
+       # id = request.GET.get("sil_id")
+       if request.method =="DELETE":
 
-    sil.delete()
-    return redirect('/')
+            sil = Kitaps.objects.filter(id = id)
+
+            sil.delete()
+            return redirect("/")
 
 # guncelle ve tamamla fonksiyonları beraber güncelleme işlemini yapmakta
 
@@ -69,14 +72,16 @@ def guncelle(request , id):
 
     guncelle1 = Kitaps.objects.get(id = id)
 
-    return render(request , "update.html" , {"guncelle1": guncelle1})
+    tablo = Yayinevi.objects.all()
+
+    return render(request , "update.html" , {"guncelle1": guncelle1,"yayinevleri":tablo})
 
 def tamamla(request, id):
     kitapadi = request.POST.get("kitapAdi")
     yazaradi = request.POST.get("yazarAdi")
-    yayinevi = request.POST.get("yayineviAdi")
+    yayinevi = request.POST.get("yayinevi")
 
-    newKitaps = Kitaps(id = id,kitapAdi=kitapadi,yaazarAdi=yazaradi,yayineviAdi=yayinevi)
+    newKitaps = Kitaps(id = id,kitapAdi=kitapadi,yaazarAdi=yazaradi, yayineviAdi_id=yayinevi)
 
     newKitaps.save()
     messages.success(request, "Seçilen veri güncellendi")

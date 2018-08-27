@@ -21,7 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index2),
     path('ekle2', views.ekle2),
-    path('sil/<int:id>', views.sil),
+    path('sil', views.sil),
     path('guncelle/<int:id>', views.guncelle),
     path('guncelle/tamamla/<int:id>', views.tamamla),
     path('arama', views.arama),
